@@ -1,0 +1,278 @@
+{% extends 'layout.html' %}
+{% block head %}
+    <title>学生成绩统计</title>
+{% endblock %}
+{% block users %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="brand">
+            <a href=""><img src="/static/assets/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+        </div>
+        <div class="container-fluid">
+            <div id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+                            <i class="lnr lnr-alarm"></i>
+                            <span class="badge bg-danger">3</span>
+                        </a>
+                        <ul class="dropdown-menu notifications">
+                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>小明家长留言：今天是教师节</a>
+                            </li>
+                            <li><a href="#" class="notification-item"><span
+                                    class="dot bg-danger"></span>小红家长留言：辛苦老师了</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>小黑家长留言：请老师注意身体</a>
+                            </li>
+                            <li><a href="#" class="more">查看全部</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img
+                                src="/static/assets/img/user.png" class="img-circle" alt="Avatar"> <span>{{ user }}</span> <i
+                                class="icon-submenu lnr lnr-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="lnr lnr-user"></i> <span>修改密码</span></a></li>
+                            <li><a href="{{ url_for('student.logout') }}"><i class="lnr lnr-exit"></i> <span>退出</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block left_sidebar %}
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+               <ul class="nav">
+                    <li><a href="{{ url_for('main.main') }}" class="active"><i class="lnr lnr-home"></i> <span>首页</span></a></li>
+                    <li>
+							<a href="#subPages1" data-toggle="collapse" class="collapsed"><i class="lnr lnr-map"></i> <span>数据分析</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages1" class="collapse ">
+								<ul class="nav">
+									<li><a href="{{ url_for('spoc.spoc_analysis_list') }}" class="">spoc学习数据统计</a></li>
+                                    <li><a href="{{ url_for('course.course_analysis_list') }}" class="">spoc课程数据统计</a></li>
+                                    <li><a href="{{ url_for('homework.homework_analysis_list') }}" class="">作业</a></li>
+                                    <li><a href="{{ url_for('test.test_analysis_list') }}" class="">测试</a></li>
+                                    <li><a href="{{ url_for('student.students_analysis') }}" class="">学生成绩统计</a></li>
+								</ul>
+							</div>
+                    </li>
+                    <li>
+							<a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> <span>数据对比</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages2" class="collapse ">
+								<ul class="nav">
+									<li><a href="{{ url_for('spoc.spoc_list_compare') }}" class="">spoc数据</a></li>
+                                    <li><a href="{{ url_for('homework.homework_list_compare') }}" class="">作业</a></li>
+                                    <li><a href="{{ url_for('test.test_list_compare') }}" class="">测试</a></li>
+								</ul>
+							</div>
+                    </li>
+                    <li>
+							<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>数据管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages" class="collapse ">
+								<ul class="nav">
+									<li><a href="{{ url_for('student.students_list') }}" class="">学生管理</a></li>
+									<li><a href="{{ url_for('spoc.spoc_list') }}" class="">spoc学习数据统计</a></li>
+                                    <li><a href="{{ url_for('course.course_list') }}" class="">spoc课程数据</a></li>
+                                    <li><a href="{{ url_for('homework.homework_list') }}" class="">作业</a></li>
+                                    <li><a href="{{ url_for('test.test_list') }}" class="">测试</a></li>
+								</ul>
+							</div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+{% block main %}
+    <div class="main">
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-body">
+                                <form class="form-inline" role="form" method="GET">
+                                    <div class="btn-group">
+									<select class="form-control" style="width:300px;" id="test" name="test" onclick="quan()">
+                                        <option value="0">---请选择测验权值---</option>
+                                        <option value="0.1">10%</option>
+                                        <option value="0.2">20%</option>
+                                        <option value="0.3">30%</option>
+                                        <option value="0.3">30%</option>
+                                        <option value="0.4">40%</option>
+                                        <option value="0.5">50%</option>
+                                        <option value="0.6">60%</option>
+                                        <option value="0.7">70%</option>
+                                        <option value="0.8">80%</option>
+                                        <option value="0.9">90%</option>
+                                        <option value="1">100%</option>
+									</select>
+                                    </div>
+                                    <div class="btn-group">
+									<select class="form-control" style="width:300px;" id="homework" name="homework">
+                                        <option value="0" id="hw">---请选择作业权值---</option>
+									</select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" title="无对比学生">计算</button>
+                                    {% if studentss != None %}
+                                        <h style="color:red">测验占比：{{ test }}%  作业占比：{{ homework }}%</h>
+                                        <a href="{{ url_for('student.students_quan_export', test=t, homework=h) }}">导出数据</a>
+                                    {% endif %}
+                                </form>
+                            </div>
+                            <div class="panel-body no-padding">
+                                <table class="table table-striped">
+                                {% if studentss == None %}
+                                    <thead>
+                                    <tr>
+                                        <th>学号</th>
+                                        <th>姓名</th>
+                                        <th>第一周作业</th>
+                                        <th>第二周作业</th>
+                                        <th>第三周作业</th>
+                                        <th>第四周作业</th>
+                                        <th>第六周作业</th>
+                                        <th>第一单元测试</th>
+                                        <th>第二单元测试</th>
+                                        <th>第三单元测试</th>
+                                        <th>第四单元测试</th>
+                                        <th>第五单元测试(1)</th>
+                                        <th>第五单元测试(2)</th>
+                                        <th>第六单元测试</th>
+                                        <th>作业总和</th>
+                                        <th>测试总和</th>
+                                        <th>总和(百分制)</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for u in students %}
+                                    <tr>
+                                        <td>{{ u[0] }}</td>
+                                        <td>{{ u[1] }}</td>
+                                        <td>{{ u[2] }}</td>
+                                        <td>{{ u[3] }}</td>
+                                        <td>{{ u[4] }}</td>
+                                        <td>{{ u[5] }}</td>
+                                        <td>{{ u[6] }}</td>
+                                        <td>{{ u[7] }}</td>
+                                        <td>{{ u[8] }}</td>
+                                        <td>{{ u[9] }}</td>
+                                        <td>{{ u[10] }}</td>
+                                        <td>{{ u[11] }}</td>
+                                        <td>{{ u[12] }}</td>
+                                        <td>{{ u[13] }}</td>
+                                        <td>{{ u[14] }}</td>
+                                        <td>{{ u[15] }}</td>
+                                        <td>{{ u[16] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                {% else %}
+                                <thead>
+                                    <tr>
+                                        <th>学号</th>
+                                        <th>姓名</th>
+                                        <th>第一周作业</th>
+                                        <th>第二周作业</th>
+                                        <th>第三周作业</th>
+                                        <th>第四周作业</th>
+                                        <th>第六周作业</th>
+                                        <th>第一单元测试</th>
+                                        <th>第二单元测试</th>
+                                        <th>第三单元测试</th>
+                                        <th>第四单元测试</th>
+                                        <th>第五单元测试(1)</th>
+                                        <th>第五单元测试(2)</th>
+                                        <th>第六单元测试</th>
+                                        <th>作业总和</th>
+                                        <th>测试总和</th>
+                                        <th>总和(百分制)</th>
+                                        <th><a style="color:red">权分(百分制)</a></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for u in studentss %}
+                                    <tr>
+                                        <td>{{ u[0] }}</td>
+                                        <td>{{ u[1] }}</td>
+                                        <td>{{ u[2] }}</td>
+                                        <td>{{ u[3] }}</td>
+                                        <td>{{ u[4] }}</td>
+                                        <td>{{ u[5] }}</td>
+                                        <td>{{ u[6] }}</td>
+                                        <td>{{ u[7] }}</td>
+                                        <td>{{ u[8] }}</td>
+                                        <td>{{ u[9] }}</td>
+                                        <td>{{ u[10] }}</td>
+                                        <td>{{ u[11] }}</td>
+                                        <td>{{ u[12] }}</td>
+                                        <td>{{ u[13] }}</td>
+                                        <td>{{ u[14] }}</td>
+                                        <td>{{ u[15] }}</td>
+                                        <td>{{ u[16] }}</td>
+                                        <td><a style="color:red">{{ u[17] }}</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                {% endif %}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        function quan() {
+            var test_id = document.getElementById("test");
+            var index = test_id.selectedIndex;
+            var value = test_id.options[index].value;
+            if (value == '0.1') {
+                var temp1=0.9;
+                var temp2='90%';
+            }
+            else if (value == '0.2') {
+                var temp1=0.8;
+                var temp2='80%';
+            }
+            else if (value == '0.3') {
+                var temp1=0.7;
+                var temp2='70%';
+            }
+            else if (value == '0.4') {
+                var temp1=0.6;
+                var temp2='60%';
+            }
+            else if (value == '0.5') {
+                var temp1=0.5;
+                var temp2='50%';
+            }
+            else if (value == '0.6') {
+                var temp1=0.4;
+                var temp2='40%';
+            }
+            else if (value == '0.7') {
+                var temp1=0.3;
+                var temp2='30%';
+            }
+            else if (value == '0.8') {
+                var temp1=0.2;
+                var temp2='20%';
+            }
+            else if (value == '0.9') {
+                var temp1=0.1;
+                var temp2='10%';
+            }
+            else if (value == '1') {
+                var temp1=0;
+                var temp2='0%';
+            }
+            document.getElementById("hw").value=temp1;
+            document.getElementById("hw").innerText=temp2;
+        }
+    </script>
+{% endblock %}

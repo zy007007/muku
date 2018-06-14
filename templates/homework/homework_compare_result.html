@@ -1,0 +1,171 @@
+{% extends 'layout.html' %}
+{% block head %}
+    <title>信息对比</title>
+{% endblock %}
+{% block users %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="brand">
+            <a href=""><img src="/static/assets/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+        </div>
+        <div class="container-fluid">
+            <div id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+                            <i class="lnr lnr-alarm"></i>
+                            <span class="badge bg-danger">3</span>
+                        </a>
+                        <ul class="dropdown-menu notifications">
+                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>小明家长留言：今天是教师节</a>
+                            </li>
+                            <li><a href="#" class="notification-item"><span
+                                    class="dot bg-danger"></span>小红家长留言：辛苦老师了</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>小黑家长留言：请老师注意身体</a>
+                            </li>
+                            <li><a href="#" class="more">查看全部</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img
+                                src="/static/assets/img/user.png" class="img-circle" alt="Avatar"> <span></span> <i
+                                class="icon-submenu lnr lnr-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="lnr lnr-user"></i> <span>修改密码</span></a></li>
+                            <li><a href="{{ url_for('spoc.logout') }}"><i class="lnr lnr-exit"></i> <span>退出</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block left_sidebar %}
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+                <ul class="nav">
+                    <li><a href="{{ url_for('main.main') }}" class="active"><i class="lnr lnr-home"></i> <span>首页</span></a></li>
+                    <li>
+							<a href="#subPages1" data-toggle="collapse" class="collapsed"><i class="lnr lnr-map"></i> <span>数据分析</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages1" class="collapse ">
+								<ul class="nav">
+									<li><a href="{{ url_for('spoc.spoc_analysis_list') }}" class="">spoc学习数据统计</a></li>
+                                    <li><a href="{{ url_for('course.course_analysis_list') }}" class="">spoc课程数据统计</a></li>
+                                    <li><a href="{{ url_for('homework.homework_analysis_list') }}" class="">作业</a></li>
+                                    <li><a href="{{ url_for('test.test_analysis_list') }}" class="">测试</a></li>
+                                    <li><a href="{{ url_for('student.students_analysis') }}" class="">学生成绩统计</a></li>
+								</ul>
+							</div>
+                    </li>
+                    <li>
+							<a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> <span>数据对比</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages2" class="collapse ">
+								<ul class="nav">
+									<li><a href="{{ url_for('spoc.spoc_list_compare') }}" class="">spoc数据</a></li>
+                                    <li><a href="{{ url_for('homework.homework_list_compare') }}" class="">作业</a></li>
+                                    <li><a href="{{ url_for('test.test_list_compare') }}" class="">测试</a></li>
+								</ul>
+							</div>
+                    </li>
+                    <li>
+							<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>数据管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages" class="collapse ">
+								<ul class="nav">
+									<li><a href="{{ url_for('student.students_list') }}" class="">学生管理</a></li>
+									<li><a href="{{ url_for('spoc.spoc_list') }}" class="">spoc学习数据统计</a></li>
+                                    <li><a href="{{ url_for('course.course_list') }}" class="">spoc课程数据</a></li>
+                                    <li><a href="{{ url_for('homework.homework_list') }}" class="">作业</a></li>
+                                    <li><a href="{{ url_for('test.test_list') }}" class="">测试</a></li>
+								</ul>
+							</div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+{% block main %}
+    <div class="main">
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="page-title">{{ name }}</h3>
+                            </div>
+                            <div class="panel-body">
+                                <form class="form-inline" role="form" method="GET">
+                                    <div class="btn-group">
+									<select class="form-control" style="width:300px;" id="student1" name="student1">
+                                        <option value="{{ s1 }}" selected="selected">{{ s1 }}-{{ stu1[0] }}</option>
+									</select>
+                                    </div>
+                                    <div class="btn-group">
+									<select class="form-control" style="width:300px;" id="student2" name="student2">
+                                        <option value="{{ s2 }}" selected="selected">{{ s2 }}-{{ stu2[0] }}</option>
+									</select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" title="无对比学生">对比</button>
+                                    <a class="btn btn-primary" href="javascript:history.go(-1)">返回</a>
+                                </form>
+                            </div>
+                            <div id="compare" style="width: 800px;height:600px;margin-left:auto;margin-right:auto;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        var myChart = echarts.init(document.getElementById('compare'));
+        option = {
+            title: {
+                text: ''
+            },
+            tooltip: {},
+            legend: {
+                data: ['{{ stu1[0] }}（{{ s1 }}）', '{{ stu2[0] }}（{{ s2 }}）']
+            },
+            radar: {
+                // shape: 'circle',
+                name: {
+                    textStyle: {
+                        color: '#fff',
+                        backgroundColor: '#999',
+                        borderRadius: 3,
+                        padding: [3, 5]
+                    }
+                },
+                indicator: [
+                    {name: '作业得分', max: 100},
+                    {name: '互评1', max: 100},
+                    {name: '互评2', max: 100},
+                    {name: '互评3', max: 100},
+                    {name: '互评4', max: 100},
+                    {name: '互评5', max: 100},
+                    {name: '互评6', max: 100}
+                ]
+            },
+            series: [{
+                name: '{{ stu1[0] }} vs {{ stu2[0] }}',
+                type: 'radar',
+                // areaStyle: {normal: {}},
+                data: [
+                    {
+                        value: [{{ stu1[1] }}, {{ stu1[2] }}, {{ stu1[3] }}, {{ stu1[4] }}, {{ stu1[5] }}, {{ stu1[6] }}, {{ stu1[7] }}],
+                        name: '{{ stu1[0] }}（{{ s1 }}）'
+                    },
+                    {
+                        value: [{{ stu2[1] }}, {{ stu2[2] }}, {{ stu2[3] }}, {{ stu2[4] }}, {{ stu2[5] }}, {{ stu2[6] }}, {{ stu2[7] }}],
+                        name: '{{ stu2[0] }}（{{ s2 }}）'
+                    }
+                ]
+            }]
+        };
+        myChart.setOption(option);
+    </script>
+{% endblock %}

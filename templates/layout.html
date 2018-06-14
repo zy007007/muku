@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="/static/assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/assets/vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/static/assets/vendor/linearicons/style.css">
+	<link rel="stylesheet" href="/static/assets/vendor/chartist/css/chartist-custom.css">
+	<link rel="stylesheet" href="/static/assets/css/main.css">
+	<link rel="stylesheet" href="/static/assets/css/demo.css">
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<link rel="apple-touch-icon" sizes="76x76" href="/static/assets/img/apple-icon.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/static/assets/img/favicon.png">
+    {% block head %}
+    {% endblock %}
+</head>
+
+<body>
+	<div id="wrapper">
+        {% block users %}
+        {% endblock %}
+        {% block left_sidebar %}
+        {% endblock %}
+        {% block main %}
+        {% endblock %}
+		<div class="clearfix"></div>
+		<footer>
+			<div class="container-fluid">
+				<p class="copyright">Copyright &copy; 2017.This is the big step.</p>
+			</div>
+		</footer>
+	</div>
+	<script src="/static/assets/vendor/jquery/jquery.min.js"></script>
+	<script src="/static/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/static/assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="/static/assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
+	<script src="/static/assets/vendor/chartist/js/chartist.min.js"></script>
+	<script src="/static/assets/scripts/klorofil-common.js"></script>
+    <script src="/static/charts/echarts.min.js"></script>
+    <script src="/static/libs/jquery.js"></script>
+    <script src="/static/libs/layer/layer.js"></script>
+    {% block script %}
+    {% endblock %}
+</body>
+</html>

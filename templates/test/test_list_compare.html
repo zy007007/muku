@@ -1,0 +1,132 @@
+{% extends 'layout.html' %}
+{% block head %}
+    <title>测试</title>
+{% endblock %}
+{% block users %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="brand">
+            <a href=""><img src="/static/assets/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+        </div>
+        <div class="container-fluid">
+            <div id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+                            <i class="lnr lnr-alarm"></i>
+                            <span class="badge bg-danger">3</span>
+                        </a>
+                        <ul class="dropdown-menu notifications">
+                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>小明家长留言：今天是教师节</a>
+                            </li>
+                            <li><a href="#" class="notification-item"><span
+                                    class="dot bg-danger"></span>小红家长留言：辛苦老师了</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>小黑家长留言：请老师注意身体</a>
+                            </li>
+                            <li><a href="#" class="more">查看全部</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img
+                                src="/static/assets/img/user.png" class="img-circle" alt="Avatar"> <span>{{ user }}</span> <i
+                                class="icon-submenu lnr lnr-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="lnr lnr-user"></i> <span>修改密码</span></a></li>
+                            <li><a href="{{ url_for('spoc.logout') }}"><i class="lnr lnr-exit"></i> <span>退出</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+{% block left_sidebar %}
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+                <ul class="nav">
+                    <li><a href="{{ url_for('main.main') }}" class="active"><i class="lnr lnr-home"></i> <span>首页</span></a></li>
+                    <li>
+							<a href="#subPages1" data-toggle="collapse" class="collapsed"><i class="lnr lnr-map"></i> <span>数据分析</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages1" class="collapse ">
+								<ul class="nav">
+									<li><a href="{{ url_for('spoc.spoc_analysis_list') }}" class="">spoc学习数据统计</a></li>
+                                    <li><a href="{{ url_for('course.course_analysis_list') }}" class="">spoc课程数据统计</a></li>
+                                    <li><a href="{{ url_for('homework.homework_analysis_list') }}" class="">作业</a></li>
+                                    <li><a href="{{ url_for('test.test_analysis_list') }}" class="">测试</a></li>
+                                    <li><a href="{{ url_for('student.students_analysis') }}" class="">学生成绩统计</a></li>
+								</ul>
+							</div>
+                    </li>
+                    <li>
+							<a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-code"></i> <span>数据对比</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages2" class="collapse ">
+								<ul class="nav">
+									<li><a href="{{ url_for('spoc.spoc_list_compare') }}" class="">spoc数据</a></li>
+                                    <li><a href="{{ url_for('homework.homework_list_compare') }}" class="">作业</a></li>
+                                    <li><a href="{{ url_for('test.test_list_compare') }}" class="">测试</a></li>
+								</ul>
+							</div>
+                    </li>
+                    <li>
+							<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>数据管理</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+							<div id="subPages" class="collapse ">
+								<ul class="nav">
+									<li><a href="{{ url_for('student.students_list') }}" class="">学生管理</a></li>
+									<li><a href="{{ url_for('spoc.spoc_list') }}" class="">spoc学习数据统计</a></li>
+                                    <li><a href="{{ url_for('course.course_list') }}" class="">spoc课程数据</a></li>
+                                    <li><a href="{{ url_for('homework.homework_list') }}" class="">作业</a></li>
+                                    <li><a href="{{ url_for('test.test_list') }}" class="">测试</a></li>
+								</ul>
+							</div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+{% block main %}
+    <div class="main">
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">测试列表</h3>
+                                <div class="right">
+                                    <button type="button" class="btn-toggle-collapse"><i class="lnr lnr-chevron-up"></i>
+                                    </button>
+                                    <button type="button" class="btn-remove"><i class="lnr lnr-cross"></i></button>
+                                </div>
+                            </div>
+                            <div class="panel-body no-padding">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>测试</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for h in tests %}
+                                    <tr>
+                                        <td>{{ h }}</td>
+                                        <td>
+                                            <a href="{{ url_for('test.test_compare_students', name=h) }}"><span class="label label-warning">查看</span></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+    </script>
+{% endblock %}
