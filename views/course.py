@@ -1,7 +1,5 @@
 # -*- coding:utf-8 -*-
-import time, os, xlrd, urllib2
-from pylab import plot, show
-from numpy import genfromtxt
+import time, os, xlrd
 from flask import Flask
 from flask import render_template, redirect, url_for, Blueprint, request
 from heplers.override import tmpl
